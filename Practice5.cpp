@@ -39,7 +39,7 @@ void P1::Task3(int input)
 }
 // Второй пункт
 
-int P2::Task1()
+void P2::Task1()
 {
 	const int SIZE = 8;
 	int num;
@@ -74,6 +74,4 @@ int P2::Task1()
 		std::cout << nums[i];
 	}
 	std::cout << '\n' << std::bitset<SIZE>(bitArr);
-
-	return 0;
 }
