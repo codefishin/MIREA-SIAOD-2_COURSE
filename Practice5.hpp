@@ -22,7 +22,7 @@ class P2
 {
 public:
 	// класс для 2-ых заданий
-	int Task1();
+	void Task1();
 };
 
 #endif
