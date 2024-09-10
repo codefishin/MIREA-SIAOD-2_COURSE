@@ -51,14 +51,12 @@ void P2::Task1()
 	{
 		std::cout << i + 1 << " number is... ";
 		std::cin >> num;
-
+	
 		if (num == 9) break;
-
+	
 		if (num >= 0 && num < 8)
 		{
 			nums.push_back(num);
-			if (num != 0) num = SIZE - num - 1;
-			else num = 7;
 			bitArr |= (1 << num);
 		}
 		else
@@ -68,10 +66,12 @@ void P2::Task1()
 		}
 		std::cout << '\n';
 	}
-	std::sort(nums.begin(), nums.end());
-	for (int i = 0; i < nums.size(); i++)
+	std::cout << '\n' << std::bitset<SIZE>(bitArr) << '\n';
+	for (int i = 0; i < SIZE; i++)
 	{
-		std::cout << nums[i];
-	}
-	std::cout << '\n' << std::bitset<SIZE>(bitArr);
+		if (bitArr & (1 << i))
+		{
+			std::cout << i << " ";
+		}
+	}	
 }
