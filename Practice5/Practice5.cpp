@@ -9,9 +9,11 @@ int P1::Task1(int input)
 }
 int P1::Task2(int input)
 {
-	unsigned char x = (char)input; 
+	unsigned char x = input; 
 	unsigned char mask = 1; 
-	x = x & (mask << 6); 
+	mask = mask << 6;
+	x = x & (~(mask));
+	x = x | mask;
 	return x;
 }
 void P1::Task3(int input)
@@ -51,9 +53,9 @@ void P2::Task1()
 	{
 		std::cout << i + 1 << " number is... ";
 		std::cin >> num;
-	
+
 		if (num == 9) break;
-	
+
 		if (num >= 0 && num < 8)
 		{
 			nums.push_back(num);
@@ -73,5 +75,92 @@ void P2::Task1()
 		{
 			std::cout << i << " ";
 		}
-	}	
+	}
+}
+void P2::Task2()
+{
+	// АБСОЛЮТНО ТОТ ЖЕ КОД ЧТО И В 1, НО SIZE = 64 и 1 = 1ULL
+	const int SIZE = 64;
+	int num;
+	unsigned long long bitArr = 0;
+	std::vector<int> nums;
+	// ввод значений
+	std::cout << "Enter values from 0 to 63.\n\nMax amount of numbers is 64.\nEnter '65' to stop.\n";
+	
+	for (int i = 0; i < SIZE; i++)
+	{
+		std::cout << i + 1 << " number is... ";
+		std::cin >> num;
+
+		if (num == 65) break;
+
+		if (num >= 0 && num < 64)
+		{
+			nums.push_back(num);
+			bitArr |= (1ULL << num);
+		}
+		else
+		{
+			std::cout << "Instruction not followed";
+			i--;
+		}
+		std::cout << '\n';
+	}
+	
+	std::cout << '\n' << std::bitset<SIZE>(bitArr) << '\n';
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		if (bitArr & (1ULL << i))
+		{
+			std::cout << i << " ";
+		}
+	}
+}
+void P2::Task3()
+{
+	const int SIZE = 64;
+	int num;
+	unsigned char bitArr[SIZE / 8]{};
+	for (int i = 0; i < 8; i++) bitArr[i] = int(0); // инициализация
+	int temp = 0;
+	std::vector<int> nums;
+	// ввод значений
+	std::cout << "Enter values from 0 to 63.\n\nMax amount of numbers is 64.\nEnter '65' to stop.\n";
+
+	for (int i = 0; i < SIZE; i++)
+	{
+		std::cout << i + 1 << " number is... ";
+		std::cin >> num;
+
+		if (num == 65) break;
+
+		if (num >= 0 && num < 64)
+		{
+			nums.push_back(num);
+			temp = num / 8;
+			bitArr[temp] |= (1 << num % 8);
+		}
+		else
+		{
+			std::cout << "Instruction not followed";
+			i--;
+		}
+		std::cout << '\n';
+	}
+
+	std::cout << '\n';
+	for (int i = SIZE / 8 - 1; i >= 0; i--)	std::cout << std::bitset<SIZE / 8>(bitArr[i]) << ' ';
+	std::cout << '\n';
+
+	for (int i = 0; i < SIZE / 8; i++)
+	{
+		for (int y = 0; y < 8; y++)
+		{
+			if (bitArr[i] & (1 << y))
+			{
+				std::cout << y + i * 8 << " ";
+			}
+		}
+	}
 }
