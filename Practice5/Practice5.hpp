@@ -23,6 +23,15 @@ class P2
 public:
 	// класс для 2-ых заданий
 	void Task1();
+	void Task2();
+	void Task3();
 };
 
+// Третий пункт
+
+class P3
+{
+public:
+	void Task1();
+};
 #endif
