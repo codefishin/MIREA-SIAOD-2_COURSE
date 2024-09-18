@@ -6,6 +6,8 @@
 #include <bitset>
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <fstream>
 
 class P1
 {
@@ -33,5 +35,7 @@ class P3
 {
 public:
 	void Task1();
+	void Task2();
+	void SpamFile();
 };
 #endif
