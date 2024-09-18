@@ -164,3 +164,46 @@ void P2::Task3()
 		}
 	}
 }
+
+// Третий пункт
+
+void P3::SpamFile()
+{
+	int _SIZE = 10000000;
+	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt");
+	for (int i = 0; i < _SIZE; i++)
+	{
+		o_data << rand() << '\n';
+	}
+	//o_data.close();
+}
+void P3::Task1()
+{
+	std::ifstream i_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt");
+	unsigned long long buffer = 0;
+	int maxSize = 10000000, bitArrPos;
+	std::vector<unsigned long long> bitArr(maxSize/64, 0);
+	while (i_data >> buffer)
+	{
+		bitArrPos = buffer / 64;
+		bitArr[bitArrPos] |= (1ULL << buffer % 64);
+	}
+	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt", std::ios::trunc);
+	for (int i = 0; i < maxSize / 64; i++)
+	{
+		for (int y = 0; y < 64; y++)
+		{
+			if (((1ULL << i) & bitArr[i]) != 0)
+			{
+				o_data << (y + 64 * i) << ' ';
+			}
+		}
+	}
+	i_data.close();
+}
+void P3::Task2()
+{
+	int maxSize = 10000000;
+	maxSize /= (8 * 1024 * 1024);
+	std::cout << maxSize << '\n';
+}
