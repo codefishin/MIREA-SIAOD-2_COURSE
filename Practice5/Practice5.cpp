@@ -2,15 +2,15 @@
 
 int P1::Task1(int input)
 {
-	unsigned char x = (char)input; // привидение ввода пользователя (в int, для удобства) в char
-	unsigned char mask = 1; // маска равна 00000001
-	x = x & (~(mask << 4)); // двигает 4-ый бит с 1 на 0 (при 0 ничего не делает)
+	unsigned char x = (char)input;
+	unsigned char mask = 1; 
+	x = x & (~(mask << 4)); 
 	return x;
 }
 int P1::Task2(int input)
 {
-	unsigned char x = input; 
-	unsigned char mask = 1; 
+	unsigned char x = char(input);
+	unsigned char mask = 1;
 	mask = mask << 6;
 	x = x & (~(mask));
 	x = x | mask;
@@ -18,24 +18,13 @@ int P1::Task2(int input)
 }
 void P1::Task3(int input)
 {
-	const int n = sizeof(int) * 8; // sizeof(int) -> 4 байта (размер числового) умножить на 8.  Получаем размер нашего БИТСЕТА (32)
-	unsigned mask = (1 << n - 1); // маска числа 1, но мы переносим единичку на место 31-го бита (то есть 32-го, потому что программа считает с 0)
-	std::cout << "Starting mask value: " << std::bitset<n>(mask) << "\nResult: "; // вывод числа маски в форме битсета
+	const int n = sizeof(int) * 8;
+	unsigned mask = (1 << n - 1);
+	std::cout << "Starting mask value: " << std::bitset<n>(mask) << "\nResult: ";
 	for (int i = 1; i <= n; i++)
 	{
-		std::cout << ((input & mask) >> (n - i)); 
+		std::cout << ((input & mask) >> (n - i));
 		mask = mask >> 1;
-		/*
-		* Здесь берётся наше число, введённое пользователем (input) и обрабатывается следующим образом
-		* выводится input, использующий поразрядное И (&)
-		* после результат поразрядного И переносится вправо по битам формулой N - I, i это текущий шаг, а n - размер битсета (32)
-		* берётся первое число битсета числа 25 (вообще 25 = 11001 в двоичном, так что первые 27 чисел это нули.) и выполняет операцию И с маской 
-		(в первом шаге она 1), после маска передвигает свои биты 1 раз направо. Следовательно 1 из маски (а маска равна единице и 31 нулю) 
-		всегда двигается по битсету ввода и операция И выглядит так:
-		* Текущее число ввода & 1
-		* Следовательно вывод оператора И будет ВСЕГДА зависить от ввода числа. Если там 0, то выводит 0. Если там 1 выводит 1
-		* короче маска тут по приколу сделана так как мы её всегда сдвигаем и для данного цикла маска не единица и 31 нуль, а 32 единицы
-		*/
 	}
 	std::cout << '\n';
 }
@@ -46,7 +35,6 @@ void P2::Task1()
 	const int SIZE = 8;
 	int num;
 	unsigned char bitArr = 0;
-	std::vector<int> nums;
 	// ввод значений
 	std::cout << "Enter values from 0 to 7.\n\nMax amount of numbers is 8.\nEnter '9' to stop.\n";
 	for (int i = 0; i < SIZE; i++)
@@ -58,7 +46,6 @@ void P2::Task1()
 
 		if (num >= 0 && num < 8)
 		{
-			nums.push_back(num);
 			bitArr |= (1 << num);
 		}
 		else
@@ -79,14 +66,12 @@ void P2::Task1()
 }
 void P2::Task2()
 {
-	// АБСОЛЮТНО ТОТ ЖЕ КОД ЧТО И В 1, НО SIZE = 64 и 1 = 1ULL
 	const int SIZE = 64;
 	int num;
 	unsigned long long bitArr = 0;
-	std::vector<int> nums;
 	// ввод значений
 	std::cout << "Enter values from 0 to 63.\n\nMax amount of numbers is 64.\nEnter '65' to stop.\n";
-	
+
 	for (int i = 0; i < SIZE; i++)
 	{
 		std::cout << i + 1 << " number is... ";
@@ -96,7 +81,6 @@ void P2::Task2()
 
 		if (num >= 0 && num < 64)
 		{
-			nums.push_back(num);
 			bitArr |= (1ULL << num);
 		}
 		else
@@ -106,7 +90,7 @@ void P2::Task2()
 		}
 		std::cout << '\n';
 	}
-	
+
 	std::cout << '\n' << std::bitset<SIZE>(bitArr) << '\n';
 
 	for (int i = 0; i < SIZE; i++)
@@ -124,7 +108,6 @@ void P2::Task3()
 	unsigned char bitArr[SIZE / 8]{};
 	for (int i = 0; i < 8; i++) bitArr[i] = int(0); // инициализация
 	int temp = 0;
-	std::vector<int> nums;
 	// ввод значений
 	std::cout << "Enter values from 0 to 63.\n\nMax amount of numbers is 64.\nEnter '65' to stop.\n";
 
@@ -137,7 +120,6 @@ void P2::Task3()
 
 		if (num >= 0 && num < 64)
 		{
-			nums.push_back(num);
 			temp = num / 8;
 			bitArr[temp] |= (1 << num % 8);
 		}
@@ -170,25 +152,24 @@ void P2::Task3()
 void P3::SpamFile()
 {
 	int _SIZE = 10000000;
-	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt");
+	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD\\Data.txt");
 	for (int i = 0; i < _SIZE; i++)
 	{
 		o_data << rand() << '\n';
 	}
-	//o_data.close();
 }
 void P3::Task1()
 {
-	std::ifstream i_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt");
+	std::ifstream i_data("C:\\Users\\Alex\\source\\repos\\SIAOD\\Data.txt");
 	unsigned long long buffer = 0;
 	int maxSize = 10000000, bitArrPos;
-	std::vector<unsigned long long> bitArr(maxSize/64, 0);
+	std::vector<unsigned long long> bitArr(maxSize / 64, 0);
 	while (i_data >> buffer)
 	{
 		bitArrPos = buffer / 64;
 		bitArr[bitArrPos] |= (1ULL << buffer % 64);
 	}
-	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD_2COURSE\\Data.txt", std::ios::trunc);
+	std::ofstream o_data("C:\\Users\\Alex\\source\\repos\\SIAOD\\Data.txt", std::ios::trunc);
 	for (int i = 0; i < maxSize / 64; i++)
 	{
 		for (int y = 0; y < 64; y++)
