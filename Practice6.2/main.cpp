@@ -53,53 +53,35 @@ int main1() {
 
     return 0;
 }
-
-// Функция для вычисления префикс-функции
-vector<int> computeKMPTable(const string& s) {
-    int n = s.length();
-    vector<int> kmpTable(n, 0);
-
-    for (int i = 1; i < n; ++i) {
-        int j = kmpTable[i - 1];
-        while (j > 0 && s[i] != s[j]) {
-            j = kmpTable[j - 1];
-        }
-        if (s[i] == s[j]) {
-            j++;
-        }
-        kmpTable[i] = j;
+bool isPalindrome(const string& s) {
+    int left = 0, right = s.size() - 1;
+    while (left < right) {
+        if (s[left] != s[right]) return false;
+        left++;
+        right--;
     }
-    return kmpTable;
+    return true;
 }
-
-// Функция для нахождения максимального палиндрома
-string findLongestPalindrome(const string& s) {
-    string reversedS = s;
-    reverse(reversedS.begin(), reversedS.end());
-
-    string combined = s + "#" + reversedS; // Формируем строку для проверки
-    vector<int> kmpTable = computeKMPTable(combined);
-
-    int maxLen = 0;
-    int maxIdx = 0;
-
-    // Проходим по префикс-функции для нахождения максимальной длины палиндрома
-    for (int i = 0; i < kmpTable.size(); ++i) {
-        if (kmpTable[i] > maxLen && i - kmpTable[i] < s.length()) {
-            maxLen = kmpTable[i];
-            maxIdx = i;
+string findLongestPalindrome(const string& text) {
+    int maxLength = 0;
+    string longestPalindrome;
+    for (int i = 0; i < text.size(); i++) {
+        for (int j = i; j < text.size(); j++) {
+            string subStr = text.substr(i, j - i + 1);
+            if (isPalindrome(subStr) && subStr.size() > maxLength) {
+                maxLength = subStr.size();
+                longestPalindrome = subStr;
+            }
         }
     }
-
-    return s.substr(maxIdx - maxLen, maxLen);
+    return longestPalindrome;
 }
-int main2() {
+int main51() {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
     string s;
     cout << "Введите строку: ";
     getline(cin, s);
-
     string palindrome = findLongestPalindrome(s);
     cout << "Максимальный палиндром: " << palindrome << endl;
 
